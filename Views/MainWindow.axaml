@@ -1,0 +1,81 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Task44.ViewModels"
+		xmlns:infrastructure="using:Task44.Infrastructure"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+		Width="950"
+		Height="650"
+        x:Class="Task44.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Task44"
+		>
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+	<Grid
+		  ShowGridLines="False"
+		  RowDefinitions="55,*"
+		  ColumnDefinitions="*,220">
+		<StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" FlowDirection="LeftToRight">
+			<Canvas>
+				<Line StartPoint="0, 10" EndPoint="950, 10" Stroke="Black"></Line>
+				<Line StartPoint="0, 45" EndPoint="950, 45" Stroke="Black"></Line>
+			</Canvas>
+			<Button Width="" Background="white">Home</Button>
+			<Button Width="" Background="white">About </Button>
+			<Button Width="" Background="white">Blog`s Main Topic 1 </Button>
+			<Button Width="" Background="white">Blog`s Main Topic 2 </Button>
+			<Button Width="" Background="white">Blog`s Main Topic 3 </Button>
+			<Button Width="" Background="white">Associated blogs </Button>
+		</StackPanel>
+		<StackPanel
+			Grid.Row="0" Grid.Column="1"
+            Orientation="Horizontal"
+            FlowDirection="RightToLeft"
+            Margin="12">
+			<Button Width="" Background="White">RSS</Button>
+		</StackPanel>
+		<ListBox ItemsSource="{Binding NewsEntities}" Grid.Row="1" Grid.Column="1">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<StackPanel Margin="10 25">
+						<TextBlock TextWrapping="Wrap" Text="{Binding Text}"></TextBlock>
+						<TextBlock TextAlignment="Right" TextWrapping="Wrap" Margin="0 5" TextDecorations="Underline">More</TextBlock>
+						<TextBlock TextAlignment="Right" Text="{Binding PublishDate} "></TextBlock>
+						<TextBlock TextWrapping="Wrap" Margin="0 10" Text="{Binding Text}"></TextBlock>
+						<TextBlock TextAlignment="Right" TextDecorations="Underline" Margin="0 5">More</TextBlock>
+						<TextBlock TextAlignment="Right" Text="{Binding PublishDate}"></TextBlock>
+					</StackPanel>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+
+		<ListBox ItemsSource="{Binding BlogEntities}" Grid.Row="1" Grid.Column="0">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<StackPanel>
+						<TextBlock Text="{Binding Article}"></TextBlock>
+						<StackPanel>
+							<TextBlock TextWrapping="Wrap" Margin="0 10 30 0"  Text="{Binding Text}"></TextBlock>
+							<Image Source="{Binding ImagePath, Converter={x:Static infrastructure:BitmapValueConverter.Instance}}" Width="250"></Image>
+						</StackPanel>
+						<Grid RowDefinitions="*" ColumnDefinitions="40,40,40,40,40,930">
+							<TextBlock Grid.Column="0" Margin="0 35">Tags:</TextBlock>
+							<TextBlock Grid.Column="1" Margin="0 35" Text="{Binding TagsList[0]}"></TextBlock>
+							<TextBlock Grid.Column="2" Margin="0 35" Text="{Binding TagsList[1]}"></TextBlock>
+							<TextBlock Grid.Column="3" Margin="0 35" Text="{Binding TagsList[2]}"></TextBlock>
+							<TextBlock Grid.Column="4" Margin="0 35" Text="{Binding TagsList[3]}"></TextBlock>
+							<TextBlock Grid.Column="5" Margin="370 35">Rate this article: 4/5</TextBlock>
+						</Grid>
+					</StackPanel>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+	</Grid>
+</Window>
